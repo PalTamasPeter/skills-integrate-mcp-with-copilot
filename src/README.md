@@ -1,11 +1,12 @@
 # Mergington High School Activities API
 
-A super simple FastAPI application that allows students to view and sign up for extracurricular activities.
+A super simple FastAPI application that allows students to view extracurricular activities and teachers to manage registrations.
 
 ## Features
 
 - View all available extracurricular activities
-- Sign up for activities
+- Teacher login and logout flow
+- Teacher-only sign up and unregister operations
 
 ## Getting Started
 
@@ -29,8 +30,20 @@ A super simple FastAPI application that allows students to view and sign up for 
 
 | Method | Endpoint                                                          | Description                                                         |
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
-| GET    | `/activities`                                                     | Get all activities with their details and current participant count |
-| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| GET    | `/activities`                                                     | Get all activities with details and participant lists               |
+| POST   | `/auth/login?username=teacher.alvarez&password=classroom123`     | Log in as teacher and get an auth token                             |
+| POST   | `/auth/logout?token={token}`                                     | Log out the active teacher session                                  |
+| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu&token={token}` | Sign up a student for an activity (teacher only)                    |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu&token={token}` | Unregister a student from an activity (teacher only)                |
+
+## Teacher Credentials
+
+Teacher usernames and passwords are stored in `teachers.json` and validated by the backend.
+
+Example entries:
+
+- `teacher.alvarez` / `classroom123`
+- `teacher.khan` / `robotics456`
 
 ## Data Model
 
